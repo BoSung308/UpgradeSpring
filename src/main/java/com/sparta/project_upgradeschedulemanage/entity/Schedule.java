@@ -6,31 +6,33 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "ScheduleEntity")
-public class ScheduleEntity extends TimeEntity {
+public class Schedule extends TimeStamp {
 
     @Id
+    //엔티티의 기본 키 값을 데이터베이스의 자동 증가 기능에 의해 자동으로 생성g
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     @Column(name = "username", nullable = false)
     private String username;
 
-    @Column(name = "todoTitle", nullable = false)
+    @Column(name = "todo_title", nullable = false)
     private String todoTitle;
 
-    @Column(name = "todoContents", nullable = false)
+    @Column(name = "todo_contents", nullable = false)
     private String todoContents;
 
-    public ScheduleEntity(ScheduleRequestDto requestDto){
+    @OneToMany(mappedBy = "schedule")
+    private List<Comment> commentList = new ArrayList<>();
+
+    public Schedule(ScheduleRequestDto requestDto){
 
         this.username = requestDto.getUsername();
         this.todoTitle = requestDto.getTodoTitle();

@@ -5,7 +5,6 @@ import com.sparta.project_upgradeschedulemanage.sevice.ScheduleService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-
 @RequestMapping("/api")
 public class ScheduleController {
         private final ScheduleService scheduleService;
@@ -14,7 +13,7 @@ public class ScheduleController {
                 this.scheduleService = scheduleService;
         }
         // 생성
-        @PostMapping("/schedule")
+        @PostMapping("/createSchedule")
         public ScheduleResponseDto createSchedule(@RequestBody ScheduleRequestDto scheduleRequestDto){
                 return scheduleService.createSchedule(scheduleRequestDto);
         }
