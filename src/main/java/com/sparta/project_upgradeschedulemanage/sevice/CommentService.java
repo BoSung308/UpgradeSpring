@@ -4,7 +4,9 @@ package com.sparta.project_upgradeschedulemanage.sevice;
 import com.sparta.project_upgradeschedulemanage.dto.CommentRequestDto;
 import com.sparta.project_upgradeschedulemanage.dto.CommentResponseDto;
 import com.sparta.project_upgradeschedulemanage.entity.Comment;
+import com.sparta.project_upgradeschedulemanage.entity.Schedule;
 import com.sparta.project_upgradeschedulemanage.repository.CommentRepository;
+import com.sparta.project_upgradeschedulemanage.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,18 +15,27 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class CommentService {
     private final CommentRepository commentRepository;
+    private final ScheduleRepository scheduleRepository;
 
-    public CommentResponseDto createComment(CommentRequestDto commentRequestDto) {
-        // RequestDto to Entity
-        Comment comment = new Comment(commentRequestDto);
-
-        // DB 저장
-        commentRepository.save(comment);
-
-        // Entity to ResponseDto
-        CommentResponseDto commentResponseDto = new CommentResponseDto(comment);
-        return commentResponseDto;
-    }
+   public Comment saveComment(Comment comment){
+       return commentRepository.save(comment);
+   }
+//    }public CommentResponseDto createComment(CommentRequestDto commentRequestDto) {
+//
+//        Schedule schedule = scheduleRepository.findById(commentRequestDto.getSchedule_id()).orElseThrow(()
+//                -> new IllegalArgumentException("Schedule id 값이 유효하지 않습니다."));
+//
+//        // RequestDto to Entity
+//        Comment comment = new Comment(commentRequestDto);
+//        comment.setSchedule(schedule);
+//
+//        // DB 저장
+//        commentRepository.save(comment);
+//
+//        // Entity to ResponseDto
+//        CommentResponseDto commentResponseDto = new CommentResponseDto(comment);
+//        return commentResponseDto;
+//    }
 
 
     public CommentResponseDto getIdInfo1(Long id){

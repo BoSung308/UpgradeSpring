@@ -4,7 +4,9 @@ package com.sparta.project_upgradeschedulemanage.controller;
 import com.sparta.project_upgradeschedulemanage.dto.CommentRequestDto;
 import com.sparta.project_upgradeschedulemanage.dto.CommentResponseDto;
 import com.sparta.project_upgradeschedulemanage.dto.ScheduleResponseDto;
+import com.sparta.project_upgradeschedulemanage.entity.Comment;
 import com.sparta.project_upgradeschedulemanage.sevice.CommentService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,8 +21,10 @@ public class CommentController {
 
     // 생성
     @PostMapping("/createComment")
-    public CommentResponseDto createComment(@RequestBody CommentRequestDto commentRequestDto){
-        return commentService.createComment(commentRequestDto);
+    public ResponseEntity<CommentResponseDto> createComment(@RequestBody CommentRequestDto commentRequestDto){
+        Comment comment = new Comment(commentRequestDto);
+        CommentResponseDto commentResponseDto = new CommentResponseDto(commentService.saveComment(comment));
+        return ResponseEntity.ok(commentResponseDto);
     }
 
     // 단건 조회

@@ -27,6 +27,7 @@ public class Comment extends TimeStamp {
     private Schedule schedule;
 
     public Comment(CommentRequestDto commentRequestDto){
+        this.schedule = commentRequestDto.getSchedule();
         this.username = commentRequestDto.getUsername();
         this.comment_content = commentRequestDto.getComment_content();
     }
@@ -35,5 +36,4 @@ public class Comment extends TimeStamp {
         this.username = requestDto.getUsername();
         this.comment_content = requestDto.getComment_content();
     }
-
 }
