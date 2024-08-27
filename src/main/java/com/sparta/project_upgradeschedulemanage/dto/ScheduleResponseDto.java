@@ -15,6 +15,7 @@ public class ScheduleResponseDto {
     private Timestamp create_date;
     private Timestamp modify_date;
 
+
     public ScheduleResponseDto(Schedule schedule) {
         this.id = schedule.getId();
         this.username = schedule.getUsername();

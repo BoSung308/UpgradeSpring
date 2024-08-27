@@ -5,6 +5,11 @@ import com.sparta.project_upgradeschedulemanage.dto.ScheduleResponseDto;
 import com.sparta.project_upgradeschedulemanage.entity.Schedule;
 import com.sparta.project_upgradeschedulemanage.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.config.PageableHandlerMethodArgumentResolverCustomizer;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
+    private final PageableHandlerMethodArgumentResolverCustomizer pageableCustomizer;
 
     // 스케줄 생성
     public ScheduleResponseDto createSchedule(ScheduleRequestDto scheduleRequestDto) {
@@ -28,6 +34,8 @@ public class ScheduleService {
         return scheduleResponseDto;
     }
 
+
+    // id로 스케줄 조회
     public ScheduleResponseDto getIdInfo(Long id) {
         // id를 못찾을경우 Entity가 null이됨
         Schedule schedule = scheduleRepository.findById(id).orElse(null);
@@ -36,6 +44,16 @@ public class ScheduleService {
         return scheduleResponseDto;
     }
 
+
+    public Page<ScheduleResponseDto> getSchedules(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "updatedDate"));
+
+
+         return scheduleRepository.findAll(pageable).map(schedule -> new ScheduleResponseDto(schedule));
+
+    }
+
+    // 스케줄 수정
     @Transactional
     public void updateSchedule(Long id, ScheduleRequestDto requestDto){
         // Repository에서 찾은 id데이터를 Entity객체에 넣어주도록함
@@ -43,6 +61,7 @@ public class ScheduleService {
         // Entity객체에 넣은 id데이터를 수정할 수 있는 메서드 호출
         schedule.update(requestDto);
     }
+
 
     // Repository에서 id를 찾을수있도록 메소드를 선언
     private Schedule findScheduleEntity(Long id) {
