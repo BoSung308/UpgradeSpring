@@ -68,6 +68,4 @@ public class CommentService {
                 new IllegalArgumentException("선택한 데이터는 확인할 수 없습니다.")
         );
     }
-
-
 }

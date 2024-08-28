@@ -1,4 +1,5 @@
 package com.sparta.project_upgradeschedulemanage.controller;
+import com.sparta.project_upgradeschedulemanage.dto.CommentRequestDto;
 import com.sparta.project_upgradeschedulemanage.dto.ScheduleRequestDto;
 import com.sparta.project_upgradeschedulemanage.dto.ScheduleResponseDto;
 import com.sparta.project_upgradeschedulemanage.entity.Schedule;
@@ -40,7 +41,7 @@ public class ScheduleController {
         @GetMapping("schedules")
         public ResponseEntity<Page<ScheduleResponseDto>> getSchedules(
                 @RequestParam(value = "page", defaultValue = "0") int page,
-                @RequestParam(value = "size", defaultValue = "10") int size) {
+                @RequestParam(value = "size", defaultValue = "2") int size) {
 
                 return ResponseEntity.ok(scheduleService.getSchedules(page,size));
         }
@@ -51,5 +52,11 @@ public class ScheduleController {
         // Service 클래스에서 Entity클래스를 통하여 update를 호출하도록 void 타입 사용
         public void updateSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto requestDto) {
                 scheduleService.updateSchedule(id, requestDto);
+        }
+
+        // 스케줄 삭제
+        @DeleteMapping("/schedule/{id}")
+        public Long deleteSchedule(@PathVariable("id") Long id){
+                return scheduleService.deleteSchedule(id);
         }
 }

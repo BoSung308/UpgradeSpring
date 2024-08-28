@@ -22,7 +22,7 @@ public class ScheduleResponseDto {
         this.todoTitle = schedule.getTodoTitle();
         this.todoContents = schedule.getTodoContents();
         this.create_date = schedule.getCreate_date();
-        this.modify_date = schedule.getModify_date();
+        this.modify_date = schedule.getModifyDate();
 
 
     }

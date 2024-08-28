@@ -32,6 +32,12 @@ public class Comment extends TimeStamp {
         this.comment_content = commentRequestDto.getComment_content();
     }
 
+    public Comment(CommentRequestDto commentRequestDto, Schedule schedule) {
+        this.schedule = schedule;
+        this.username = commentRequestDto.getUsername();
+        this.comment_content = commentRequestDto.getComment_content();
+    }
+
     public void update(CommentRequestDto requestDto){
         this.username = requestDto.getUsername();
         this.comment_content = requestDto.getComment_content();

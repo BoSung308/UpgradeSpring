@@ -2,6 +2,7 @@ package com.sparta.project_upgradeschedulemanage.sevice;
 
 import com.sparta.project_upgradeschedulemanage.dto.ScheduleRequestDto;
 import com.sparta.project_upgradeschedulemanage.dto.ScheduleResponseDto;
+import com.sparta.project_upgradeschedulemanage.entity.Comment;
 import com.sparta.project_upgradeschedulemanage.entity.Schedule;
 import com.sparta.project_upgradeschedulemanage.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
@@ -44,10 +45,9 @@ public class ScheduleService {
         return scheduleResponseDto;
     }
 
-
+    // 페이징 조회
     public Page<ScheduleResponseDto> getSchedules(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "updatedDate"));
-
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "modifyDate"));
 
          return scheduleRepository.findAll(pageable).map(schedule -> new ScheduleResponseDto(schedule));
 
@@ -57,14 +57,22 @@ public class ScheduleService {
     @Transactional
     public void updateSchedule(Long id, ScheduleRequestDto requestDto){
         // Repository에서 찾은 id데이터를 Entity객체에 넣어주도록함
-        Schedule schedule = findScheduleEntity(id);
+        Schedule schedule = findSchedule(id);
         // Entity객체에 넣은 id데이터를 수정할 수 있는 메서드 호출
         schedule.update(requestDto);
+        System.out.println();
     }
 
+    //
+    public Long deleteSchedule(Long id){
 
+        Schedule schedule = findSchedule(id);
+        scheduleRepository.delete(schedule);
+
+        return id;
+    }
     // Repository에서 id를 찾을수있도록 메소드를 선언
-    private Schedule findScheduleEntity(Long id) {
+    private Schedule findSchedule(Long id) {
         return scheduleRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("선택한 데이터는 확인할 수 없습니다.")
         );

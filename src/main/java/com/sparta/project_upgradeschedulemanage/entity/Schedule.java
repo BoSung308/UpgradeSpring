@@ -16,7 +16,7 @@ import java.util.List;
 public class Schedule extends TimeStamp {
 
     @Id
-    //엔티티의 기본 키 값을 데이터베이스의 자동 증가 기능에 의해 자동으로 생성g
+    //엔티티의 기본 키 값을 데이터베이스의 자동 증가 기능에 의해 자동으로 생성
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -29,7 +29,7 @@ public class Schedule extends TimeStamp {
     @Column(name = "todo_contents", nullable = false)
     private String todoContents;
 
-    @OneToMany(mappedBy = "schedule")
+    @OneToMany(mappedBy = "schedule", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Comment> commentList = new ArrayList<>();
 
     public Schedule(ScheduleRequestDto requestDto){
