@@ -1,11 +1,11 @@
 package com.sparta.project_upgradeschedulemanage.dto;
 
+
 import lombok.Getter;
 
 @Getter
-public class CommentRequestDto{
+public class UserRequestDto {
 
-    private Long scheduleId;
     private String username;
-    private String commentContent;
+    private String email;
 }

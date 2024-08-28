@@ -17,11 +17,9 @@ public abstract class TimeStamp {
     @CreatedDate
     @Column(updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    private Timestamp create_date;
+    private Timestamp createDate;
     @LastModifiedDate
-    @Column(name = "modify_date")
+    @Column
     @Temporal(TemporalType.TIMESTAMP)
     private Timestamp modifyDate;
-
-
 }

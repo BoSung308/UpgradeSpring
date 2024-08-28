@@ -1,25 +1,23 @@
 package com.sparta.project_upgradeschedulemanage.controller;
-import com.sparta.project_upgradeschedulemanage.dto.CommentRequestDto;
+
 import com.sparta.project_upgradeschedulemanage.dto.ScheduleRequestDto;
 import com.sparta.project_upgradeschedulemanage.dto.ScheduleResponseDto;
-import com.sparta.project_upgradeschedulemanage.entity.Schedule;
+import com.sparta.project_upgradeschedulemanage.dto.UserScheduleRequestDto;
 import com.sparta.project_upgradeschedulemanage.sevice.ScheduleService;
+import com.sparta.project_upgradeschedulemanage.sevice.UserService;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api")
 public class ScheduleController {
         private final ScheduleService scheduleService;
+        private final UserService userService;
 
-        public ScheduleController(ScheduleService scheduleService){
+        public ScheduleController(ScheduleService scheduleService, UserService userService){
                 this.scheduleService = scheduleService;
+                this.userService = userService;
         }
 
 
@@ -27,6 +25,14 @@ public class ScheduleController {
         @PostMapping("/createSchedule")
         public ScheduleResponseDto createSchedule(@RequestBody ScheduleRequestDto scheduleRequestDto){
                 return scheduleService.createSchedule(scheduleRequestDto);
+        }
+
+
+        @PostMapping("/plusUser")
+        public void plusUser(@RequestBody UserScheduleRequestDto requestDto){
+                System.out.println("requestDto.getUserIds().size() = " + requestDto.getUserIds().size());
+                System.out.println("requestDto.getScheduleId() = " + requestDto.getScheduleId());
+                scheduleService.plusUser(requestDto);
         }
 
 

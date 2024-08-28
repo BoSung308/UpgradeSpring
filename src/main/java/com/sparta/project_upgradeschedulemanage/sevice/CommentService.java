@@ -20,13 +20,17 @@ public class CommentService {
     private final ScheduleRepository scheduleRepository;
 
     // 생성
-   public Comment saveComment(Comment comment){
+   public Comment saveComment(CommentRequestDto commentRequestDto){
+       Schedule schedule = scheduleRepository.findById(commentRequestDto.getScheduleId()).orElseThrow(() ->
+               new IllegalArgumentException("선택한 데이터는 확인할 수 없습니다."));
+       Comment comment = new Comment(commentRequestDto, schedule);
+
        return commentRepository.save(comment);
    }
 
 
     // id로 단건 조회
-    public CommentResponseDto getIdInfo1(Long id){
+    public CommentResponseDto getIdInfo(Long id){
         Comment comment = commentRepository.findById(id).orElse(null);
 
         CommentResponseDto commentResponseDto = new CommentResponseDto(comment);

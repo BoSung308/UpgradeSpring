@@ -16,30 +16,25 @@ public class Comment extends TimeStamp {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "username", nullable = false)
+    @Column(name = "User", nullable = false)
     private String username;
 
     @Column(name = "comment_content", nullable = false)
-    private String comment_content;
+    private String commentContent;
 
     @ManyToOne
     @JoinColumn(name = "schedule_id")
     private Schedule schedule;
 
-    public Comment(CommentRequestDto commentRequestDto){
-        this.schedule = commentRequestDto.getSchedule();
-        this.username = commentRequestDto.getUsername();
-        this.comment_content = commentRequestDto.getComment_content();
-    }
 
     public Comment(CommentRequestDto commentRequestDto, Schedule schedule) {
         this.schedule = schedule;
         this.username = commentRequestDto.getUsername();
-        this.comment_content = commentRequestDto.getComment_content();
+        this.commentContent = commentRequestDto.getCommentContent();
     }
 
     public void update(CommentRequestDto requestDto){
         this.username = requestDto.getUsername();
-        this.comment_content = requestDto.getComment_content();
+        this.commentContent = requestDto.getCommentContent();
     }
 }

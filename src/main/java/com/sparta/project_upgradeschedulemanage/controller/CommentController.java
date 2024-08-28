@@ -3,10 +3,6 @@ package com.sparta.project_upgradeschedulemanage.controller;
 
 import com.sparta.project_upgradeschedulemanage.dto.CommentRequestDto;
 import com.sparta.project_upgradeschedulemanage.dto.CommentResponseDto;
-import com.sparta.project_upgradeschedulemanage.dto.ScheduleResponseDto;
-import com.sparta.project_upgradeschedulemanage.entity.Comment;
-import com.sparta.project_upgradeschedulemanage.entity.Schedule;
-import com.sparta.project_upgradeschedulemanage.repository.CommentRepository;
 import com.sparta.project_upgradeschedulemanage.repository.ScheduleRepository;
 import com.sparta.project_upgradeschedulemanage.sevice.CommentService;
 import com.sparta.project_upgradeschedulemanage.sevice.ScheduleService;
@@ -30,24 +26,22 @@ public class CommentController {
     }
 
 
-    // 생성
+    // 생성 (코드방식? 타입?을 통일 시키는것이 가시성 등을 위해서라도 통일시켜야한다는 것을 알지만,
+    // 스케줄생성 메서드와 타입이 다른 이유는 코드구성방식의 다양성을 경험해보기 위하여 타입을 달리하여 작성함)
+
     @PostMapping("/createComment")
     public ResponseEntity<CommentResponseDto> createComment(@RequestBody CommentRequestDto commentRequestDto){
+
         // 스케줄 id 기반으로 스케줄을 찾음
-
-        Schedule schedule = scheduleRepository.findById(commentRequestDto.getScheduleId()).orElseThrow(() ->
-                new IllegalArgumentException("선택한 데이터는 확인할 수 없습니다."));
-
-        Comment comment = new Comment(commentRequestDto, schedule);
-        CommentResponseDto commentResponseDto = new CommentResponseDto(commentService.saveComment(comment));
+        CommentResponseDto commentResponseDto = new CommentResponseDto(commentService.saveComment(commentRequestDto));
         return ResponseEntity.ok(commentResponseDto);
     }
 
 
     // id로 단건 조회
     @GetMapping("/comment/{id}")
-    public CommentResponseDto getIdInfo1(@PathVariable Long id) {
-        return commentService.getIdInfo1(id);
+    public CommentResponseDto getIdInfo(@PathVariable Long id) {
+        return commentService.getIdInfo(id);
     }
 
 
