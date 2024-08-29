@@ -43,7 +43,7 @@ public class ScheduleService {
         return scheduleResponseDto;
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////
+
     public void plusUser(UserScheduleRequestDto requestDto) {
         Long scheduleId = requestDto.getScheduleId();
 
@@ -62,7 +62,6 @@ public class ScheduleService {
 
         }
     }
-/////////////////////////////////////////////////////////////////////////////////////////
 
 
     // id로 스케줄 조회
@@ -74,12 +73,14 @@ public class ScheduleService {
         return scheduleResponseDto;
     }
 
+
     // 페이징 조회
     public Page<ScheduleResponseDto> getSchedules(int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "modifyDate"));
 
          return scheduleRepository.findAll(pageable).map(schedule -> new ScheduleResponseDto(schedule));
     }
+
 
     // 스케줄 수정
     @Transactional
@@ -90,6 +91,7 @@ public class ScheduleService {
         schedule.update(requestDto);
         System.out.println();
     }
+
 
     // 전체 조회
     public Long deleteSchedule(Long id){

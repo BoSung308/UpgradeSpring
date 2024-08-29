@@ -62,6 +62,7 @@ public class UserService {
         return userScheduleResponseDto;
     }*/
 
+
     // id로 스케줄 조회
     public UserResponseDto getIdInfo(Long id) {
         // id를 못찾을경우 Entity가 null이됨
@@ -86,6 +87,7 @@ public class UserService {
 
         return id;
     }
+
 
     private User findUser(Long id) {
         return userRepository.findById(id).orElseThrow(() ->

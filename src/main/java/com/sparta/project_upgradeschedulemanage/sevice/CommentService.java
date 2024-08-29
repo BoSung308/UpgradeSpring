@@ -38,7 +38,7 @@ public class CommentService {
     }
 
 
-    // 전체 조회
+    // 전체 댓글 조회
     public List<CommentResponseDto> getComment() {
         // DB 조회
         return commentRepository.findAll().stream().map(CommentResponseDto::new).toList();

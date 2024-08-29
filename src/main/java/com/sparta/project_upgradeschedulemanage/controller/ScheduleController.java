@@ -28,10 +28,11 @@ public class ScheduleController {
         }
 
 
+        // 담당자 추가
         @PostMapping("/plusUser")
         public void plusUser(@RequestBody UserScheduleRequestDto requestDto){
-                System.out.println("requestDto.getUserIds().size() = " + requestDto.getUserIds().size());
-                System.out.println("requestDto.getScheduleId() = " + requestDto.getScheduleId());
+          /*      System.out.println("requestDto.getUserIds().size() = " + requestDto.getUserIds().size());
+                System.out.println("requestDto.getScheduleId() = " + requestDto.getScheduleId());*/
                 scheduleService.plusUser(requestDto);
         }
 
@@ -47,7 +48,7 @@ public class ScheduleController {
         @GetMapping("schedules")
         public ResponseEntity<Page<ScheduleResponseDto>> getSchedules(
                 @RequestParam(value = "page", defaultValue = "0") int page,
-                @RequestParam(value = "size", defaultValue = "2") int size) {
+                @RequestParam(value = "size", defaultValue = "10") int size) {
 
                 return ResponseEntity.ok(scheduleService.getSchedules(page,size));
         }
