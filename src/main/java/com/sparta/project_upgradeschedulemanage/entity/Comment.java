@@ -1,5 +1,6 @@
 package com.sparta.project_upgradeschedulemanage.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sparta.project_upgradeschedulemanage.dto.CommentRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -25,7 +26,6 @@ public class Comment extends TimeStamp {
     @ManyToOne
     @JoinColumn(name = "schedule_id")
     private Schedule schedule;
-
 
     public Comment(CommentRequestDto commentRequestDto, Schedule schedule) {
         this.schedule = schedule;

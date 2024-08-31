@@ -1,5 +1,6 @@
 package com.sparta.project_upgradeschedulemanage.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.sparta.project_upgradeschedulemanage.dto.ScheduleRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -29,14 +30,16 @@ public class Schedule extends TimeStamp {
     @Column(name = "todo_contents", nullable = false)
     private String todoContents;
 
+    @Column
+    private Long userId;
+
     // 댓글과의 다대일 양방향 관계 설정, RMOVE를 이용하여 부모엔티티가 삭제될 떄 연관된 자식엔티티도 삭제
     // orphanRemoval을 이용하여 부모엔티티에서 연관된 자식 엔티티가 삭제될때, 자식엔티티 db를 자동 삭제
     @OneToMany(mappedBy = "schedule", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Comment> commentList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "schedule", cascade = CascadeType.ALL, orphanRemoval = true )
+    @OneToMany(mappedBy = "schedule", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY )
     private List<UserSchedule> userScheduleList = new ArrayList<>();
-
 
     public Schedule(ScheduleRequestDto requestDto){
 
