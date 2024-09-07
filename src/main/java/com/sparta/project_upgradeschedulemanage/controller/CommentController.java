@@ -48,7 +48,7 @@ public class CommentController {
     // 전체 조회
     @GetMapping("/commentAll")
     public List<CommentResponseDto> getComment(){
-        return commentService.getComment();
+        return commentService.getComment() ;
     }
 
 

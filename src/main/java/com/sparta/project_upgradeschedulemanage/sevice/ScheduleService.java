@@ -106,7 +106,6 @@ public class ScheduleService {
 
     // 전체 조회
     public Long deleteSchedule(Long id) {
-
         Schedule schedule = findSchedule(id);
         scheduleRepository.delete(schedule);
 

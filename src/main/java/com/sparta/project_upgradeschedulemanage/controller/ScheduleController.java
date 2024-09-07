@@ -70,6 +70,7 @@ public class ScheduleController {
         @PutMapping("/schedule/{id}")
         // Service 클래스에서 Entity클래스를 통하여 update를 호출하도록 void 타입 사용
         public void updateSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto requestDto) {
+
                 scheduleService.updateSchedule(id, requestDto);
         }
 

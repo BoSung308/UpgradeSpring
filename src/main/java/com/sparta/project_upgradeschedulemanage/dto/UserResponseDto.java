@@ -3,7 +3,6 @@ package com.sparta.project_upgradeschedulemanage.dto;
 
 import com.sparta.project_upgradeschedulemanage.entity.User;
 import lombok.Getter;
-
 import java.sql.Timestamp;
 @Getter
 public class UserResponseDto {

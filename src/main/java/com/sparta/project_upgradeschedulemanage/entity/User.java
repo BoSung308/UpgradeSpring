@@ -32,5 +32,7 @@ public class User extends TimeStamp{
     public User(UserRequestDto requestDto){
         this.username = requestDto.getUsername();
         this.email = requestDto.getEmail();
+
     }
 }
+

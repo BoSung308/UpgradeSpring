@@ -1,6 +1,5 @@
 package com.sparta.project_upgradeschedulemanage.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.sparta.project_upgradeschedulemanage.dto.ScheduleRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
