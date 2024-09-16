@@ -1,15 +1,14 @@
-/*
 package com.sparta.project_upgradeschedulemanage.auth.service;
 
-import com.sparta.project_upgradeschedulemanage.auth.dto.SigninRequestDto;
-import com.sparta.project_upgradeschedulemanage.auth.dto.SigninResponseDto;
+import com.sparta.project_upgradeschedulemanage.auth.dto.SignInRequestDto;
+import com.sparta.project_upgradeschedulemanage.auth.dto.SignInResponseDto;
 import com.sparta.project_upgradeschedulemanage.auth.dto.SignupRequestDto;
 import com.sparta.project_upgradeschedulemanage.auth.dto.SignupResponseDto;
 import com.sparta.project_upgradeschedulemanage.config.JwtUtil;
 import com.sparta.project_upgradeschedulemanage.config.PasswordEncoder;
+import com.sparta.project_upgradeschedulemanage.exception.AuthException;
 import com.sparta.project_upgradeschedulemanage.user.entity.User;
 import com.sparta.project_upgradeschedulemanage.user.repository.UserRepository;
-import jakarta.security.auth.message.AuthException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,10 +19,15 @@ import org.springframework.transaction.annotation.Transactional;
 public class AuthService {
 
     private final UserRepository userRepository;
-    private PasswordEncoder passwordEncoder;
-    private JwtUtil jwtUtil;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
+    @Transactional
     public SignupResponseDto signup(SignupRequestDto signupRequestDto) {
+
+        if(userRepository.existsByEmail(signupRequestDto.getEmail())){
+            throw new IllegalArgumentException("중복된 이메일입니다.");
+        }
 
         String encodedPassword = passwordEncoder.encode(signupRequestDto.getPassword());
 
@@ -31,26 +35,34 @@ public class AuthService {
 
         User savedUser = userRepository.save(user);
 
-        String bearerToken = jwtUtil.createToken(savedUser.getId(), savedUser.getUsername(), savedUser.getEmail());
+        String bearerToken = jwtUtil.createToken(
+                savedUser.getId(),
+                savedUser.getEmail(),
+                savedUser.getUsername()
+        );
 
         return new SignupResponseDto(bearerToken);
+
     }
 
-    public SigninResponseDto signin(SigninRequestDto signinRequestDto) throws AuthException {
+    public SignInResponseDto signin(SignInRequestDto signinRequestDto)  {
         User user = userRepository.findByEmail(signinRequestDto.getEmail())
-                .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 이메일입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 이메일입니다..")
+                );
 
-        if (!passwordEncoder.matches(signinRequestDto.getPassword(), user.getPassword())) {
+        // 로그인 시 이메일과 비밀번호가 일치하지 않을 경우 401 반환
+        if(!PasswordEncoder.matches(signinRequestDto.getPassword(), user.getPassword())) {
             throw new AuthException("잘못된 비밀번호입니다.");
         }
+
         String bearerToken = jwtUtil.createToken(
                 user.getId(),
-                user.getUsername(),
-                user.getEmail()
+                user.getEmail(),
+                user.getUsername()
         );
-        return new SigninResponseDto(bearerToken);
+        return new SignInResponseDto(bearerToken);
 
 
     }
 
-}*/
+}

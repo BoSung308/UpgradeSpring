@@ -29,8 +29,12 @@ public class JwtFilter implements Filter {
         String url = httpRequest.getRequestURI();
         String method = httpRequest.getMethod();
 
-        // 특정 URL & HTTP 메서드에 대해 필터를 건너뛰도록 설정
-        if ("POST".equalsIgnoreCase(method) && "/users".equals(url)) {
+     /*   // 특정 URL & HTTP 메서드에 대해 필터를 건너뛰도록 설정
+        if ("POST".equalsIgnoreCase(method) && "/auth/signup".equals(url)) {
+            chain.doFilter(request, response);
+            return;
+        }*/
+        if(url.startsWith("/auth")) {
             chain.doFilter(request, response);
             return;
         }
@@ -38,7 +42,7 @@ public class JwtFilter implements Filter {
         String bearerJwt = httpRequest.getHeader("Authorization");
 
         if (bearerJwt == null || !bearerJwt.startsWith("Bearer ")) {
-            httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "JWT 토큰이 필요합니다.");
+            httpResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "JWT 토큰이 필요합니다.");
             return;
         }
 

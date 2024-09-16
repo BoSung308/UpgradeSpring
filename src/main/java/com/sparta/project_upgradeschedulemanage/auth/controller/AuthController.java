@@ -1,10 +1,9 @@
-/*
 package com.sparta.project_upgradeschedulemanage.auth.controller;
 
-import com.sparta.project_upgradeschedulemanage.auth.dto.SigninRequestDto;
+import com.sparta.project_upgradeschedulemanage.auth.dto.SignInRequestDto;
 import com.sparta.project_upgradeschedulemanage.auth.dto.SignupRequestDto;
 import com.sparta.project_upgradeschedulemanage.auth.dto.SignupResponseDto;
-import com.sparta.project_upgradeschedulemanage.auth.dto.SigninResponseDto;
+import com.sparta.project_upgradeschedulemanage.auth.dto.SignInResponseDto;
 import com.sparta.project_upgradeschedulemanage.auth.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,8 +22,7 @@ public class AuthController {
     }
 
     @PostMapping("/auth/signin")
-    public SigninResponseDto singin(@RequestBody SigninRequestDto signinRequestDto){
+    public SignInResponseDto singin(@RequestBody SignInRequestDto signinRequestDto){
             return authService.signin(signinRequestDto);
     }
 }
-*/

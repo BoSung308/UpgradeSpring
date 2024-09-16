@@ -16,7 +16,9 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
+    //JWT 토큰을 사용할 때, Authorization 헤더에서 토큰을 구분하기 위해 사용하는 접두사
     private static final String BEARER_PREFIX = "Bearer ";
+
     private static final long TOKEN_TIME = 60 * 60 * 1000L; // 60분
 
     @Value("${jwt.secret.key}")

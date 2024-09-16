@@ -21,11 +21,6 @@ public class UserController {
         this.userService = userService;
     }
 
-    // 유저 생성
-    @PostMapping("/users")
-    public UserSaveResponseDto createUser(@RequestBody UserSaveRequestDto userSaveRequestDto) {
-        return userService.createUser(userSaveRequestDto);
-    }
 
     // 단건 조회
     @GetMapping("/user/{id}")

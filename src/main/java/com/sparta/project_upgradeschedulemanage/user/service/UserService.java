@@ -1,12 +1,7 @@
 package com.sparta.project_upgradeschedulemanage.user.service;
 
 
-import com.sparta.project_upgradeschedulemanage.config.JwtUtil;
-import com.sparta.project_upgradeschedulemanage.config.PasswordEncoder;
-import com.sparta.project_upgradeschedulemanage.user.dto.UserRequestDto;
 import com.sparta.project_upgradeschedulemanage.user.dto.UserResponseDto;
-import com.sparta.project_upgradeschedulemanage.user.dto.UserSaveRequestDto;
-import com.sparta.project_upgradeschedulemanage.user.dto.UserSaveResponseDto;
 import com.sparta.project_upgradeschedulemanage.user.entity.User;
 import com.sparta.project_upgradeschedulemanage.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,31 +14,6 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
-    private PasswordEncoder passwordEncoder;
-    private JwtUtil jwtUtil;
-
-
-    // 유저 생성
-    public UserSaveResponseDto createUser(UserSaveRequestDto requestDto){
-        if(userRepository.existsByEmail(requestDto.getEmail())){
-            throw new IllegalArgumentException("중복된 이메일입니다.");
-        }
-
-        String encodedPassword = passwordEncoder.encode(requestDto.getPassword());
-
-        User user = new User(requestDto.getUsername(), requestDto.getEmail(), encodedPassword);
-
-        User savedUser = userRepository.save(user);
-
-        String bearerToken = jwtUtil.createToken(
-                savedUser.getId(),
-                savedUser.getEmail(),
-                savedUser.getUsername()
-        );
-
-        return new UserSaveResponseDto(bearerToken);
-
-    }
 
 
 
